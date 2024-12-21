@@ -5,4 +5,4 @@ services:
       - .:/app
     environment:
       - PYTHONUNBUFFERED=1
-    command: python src/crawler.py https://docs.pola.rs/ --max-pages 2
+    command: python src/crawler.py https://docs.pola.rs/ --max-pages 1

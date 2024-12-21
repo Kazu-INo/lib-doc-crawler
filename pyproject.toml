@@ -13,6 +13,7 @@ mypy = "^1.4.1"
 trafilatura = "^1.6.1"
 beautifulsoup4 = "^4.12.2"
 requests = "^2.31.0"
+markitdown = "0.0.1a3"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

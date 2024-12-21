@@ -20,6 +20,9 @@ COPY pyproject.toml poetry.lock* ./
 RUN poetry config virtualenvs.create false \
     && poetry install --no-interaction --no-ansi
 
+# outputディレクトリの作成と権限設定
+RUN mkdir -p /app/output
+
 # アプリケーションのコピー
 COPY . .
 

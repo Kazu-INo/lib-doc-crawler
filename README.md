@@ -1,4 +1,4 @@
-# Library Documentation Crawler
+# Library Documentation Crawler v0.1.0
 
 Read the Docsのドキュメントをクロールし、テキストコンテンツを抽出するツールです。
 
@@ -6,7 +6,9 @@ Read the Docsのドキュメントをクロールし、テキストコンテン�
 
 - trafilaturaを使用してドキュメントのコンテンツを抽出
 - 再帰的にページを探索
-- 取得したコンテンツをtxtファイルとして保存
+- 取得したコンテンツを単一のMarkdownファイルとして保存
+  - クロール元URLとタイムスタンプの自動記録
+  - MarkItDownを使用したMarkdown形式への変換
 - robots.txtに準拠したクローリング
   - Crawl-delayの遵守
   - User-agentとDisallowルールの遵守
@@ -32,7 +34,7 @@ docker compose up --build
 docker compose run --rm app python src/crawler.py https://docs.pola.rs/
 
 # 最大ページ数を指定
-docker compose run --rm app python src/crawler.py https://docs.pola.rs/ --max-pages 5
+docker compose run --rm app python src/crawler.py https://docs.pola.rs/ --max-pages 1
 
 # 出力ディレクトリを指定
 docker compose run --rm app python src/crawler.py https://docs.pola.rs/ --output-dir custom_docs
@@ -69,7 +71,7 @@ poetry run python src/crawler.py https://docs.pola.rs/ --max-pages 5 --output-di
 
 - `url`: クロール対象のURL（必須）
 - `--max-pages`: クロールする最大ページ数（オプション、デフォルト：制限なし）
-- `--output-dir`: 出力ディレクトリ（オプション、デフォルト：docs）
+- `--output-dir`: 出力ディレクトリ（オプション、デフォルト：output）
 - `--user-agent`: User-Agent文字列（オプション、デフォルト：DocCrawler/1.0）
 
 ## robots.txt対応
@@ -82,8 +84,19 @@ poetry run python src/crawler.py https://docs.pola.rs/ --max-pages 5 --output-di
 
 ## 出力
 
-クロールしたコンテンツは`docs`ディレクトリに保存されます。
-ファイル名はURLのパスから自動的に生成されます。
+クロールしたコンテンツは`output/{任意のファイル名}.md`に保存されます。
+各ページのコンテンツは以下のフォーマットで記録されます：
+
+```markdown
+---
+source: クロール元URL
+crawled_at: クロール日時
+---
+
+ページコンテンツ（Markdown形式）
+
+---
+```
 
 ## 注意事項
 
